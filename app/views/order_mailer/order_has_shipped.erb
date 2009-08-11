@@ -1,0 +1,20 @@
+<h2>Dear <%= @order.name_for_email %>,</h2>
+
+<p>Guess what? The Yellow Bird Project order you made has been shipped!</p>
+<p>
+======================================================== <br />
+Shipped Order<br />
+========================================================<br />
+<% for item in @order.line_items %>
+	<%= item.product.name %>: <%= variant_options_ybp item.variant %> (<%= item.quantity %>) @ <%= number_to_currency(item.price) %> = <%= number_to_currency(item.price * item.quantity) %><br />
+<% end %>
+========================================================<br />
+Subtotal: <%= number_to_currency(@order.item_total) %><br />
+Shipping (<%= @order.shipment.shipping_method.name rescue '' %>): <%= number_to_currency(@order.ship_total) %><br />
+Tracking Number: <%= @order.shipments.first.tracking %>
+<br /><br />
+Order Total: <%= number_to_currency(@order.total) %><br />
+</p>
+<p>Thanks for your business!</p>
+<p><i>- Yellow Bird Project</i></p>
+
